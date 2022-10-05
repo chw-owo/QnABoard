@@ -1,16 +1,18 @@
 import { Route } from 'react-router-dom';
-import React, {useState, useEffect} from 'react'
-import Board from './Board';
-import Register from './Register';
-import Login from './Login';
-import Post from './Post';
-import Detail from './Detail';
-import Mypage from './Mypage';
-import Header from './Header';
+import { useEffect} from 'react'
+import { useRecoilState } from 'recoil';
+import { isLoginState } from "./atoms";
+import Board from './Components/Board';
+import Register from './Components/Register';
+import Login from './Components/Login';
+import Post from './Components/Post';
+import Detail from './Components/Detail';
+import Mypage from './Components/Mypage';
+import Header from './Components/Header';
 
 function App(){
 
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState)
  
   useEffect(() => {
     if(sessionStorage.getItem('user_id') === null){
@@ -19,10 +21,10 @@ function App(){
       setIsLogin(true)
     }
 
-  }, [])
+  }, [setIsLogin])
 
   return (
-    <div class ="App">
+    <div className ="App">
       <Header isLogin={isLogin}></Header>
 
       <Route exact path="/">           
