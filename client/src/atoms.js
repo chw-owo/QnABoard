@@ -66,3 +66,35 @@ export const titleState = atom({
     key: "titleState",
     default: [],
 });
+
+export const authorState = atom ({
+    key:"authorState",
+    default: "",
+});
+
+export const userState = atom ({
+    key:"userState",
+    default: "",
+});
+
+export const isMineState = atom ({
+    key:"isMineState",
+    default: false,
+});
+
+export const idanswerState = atom ({
+    key:"idanswerState",
+    default: "",
+});
+
+
+export const acceptedAnswerState = atom ({
+    key:"acceptedAnswerState",
+    default: [],
+});
+
+export const acceptedState = atom ({
+    key:"acceptedState",
+    default: "false",
+});
+

@@ -1,7 +1,4 @@
 import { Route } from 'react-router-dom';
-import { useEffect} from 'react'
-import { useRecoilState } from 'recoil';
-import { isLoginState } from "./atoms";
 import Board from './Components/Board';
 import Register from './Components/Register';
 import Login from './Components/Login';
@@ -12,20 +9,9 @@ import Header from './Components/Header';
 
 function App(){
 
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState)
- 
-  useEffect(() => {
-    if(sessionStorage.getItem('user_id') === null){
-      setIsLogin(false)
-    } else {
-      setIsLogin(true)
-    }
-
-  }, [setIsLogin])
-
   return (
     <div className ="App">
-      <Header isLogin={isLogin}></Header>
+      <Header></Header>
 
       <Route exact path="/">           
         <Board/>

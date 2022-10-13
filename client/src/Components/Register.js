@@ -36,16 +36,17 @@ function Register() {
         }
 
         if(hasEmptyInfo){
-            console.log('모든 항목을 다 입력해주십시오.');
+            alert('모든 항목을 다 입력해주십시오.');
         }
         else if(password !== confirmPassword) {
-            console.log('비밀번호와 비밀번호확인이 일치하지 않습니다.');
+            alert('비밀번호와 비밀번호확인이 일치하지 않습니다.');
         }
         else{
             console.log(userInfo);
             Axios.post("http://localhost:8000/register", userInfo)
             .then((res)=>{
                 console.log(res);
+                document.location.href = '/login'
             })
             .catch((e)=>{
                 console.error(e);

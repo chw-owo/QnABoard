@@ -36,8 +36,16 @@ function Login() {
         console.log(userInfo);
         Axios.post("http://localhost:8000/login", userInfo)
         .then((res)=>{ 
-            sessionStorage.setItem('user_id', username);
-            document.location.href = '/'
+            if(res.data === 'login success')
+            {
+                sessionStorage.setItem('user_id', username);
+                document.location.href = '/'
+            }else
+            {
+                alert(res.data);
+                document.location.href = '/login'
+            }
+            
         })
         .catch((e)=>{
             console.error(e);

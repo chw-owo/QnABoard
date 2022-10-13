@@ -1,10 +1,11 @@
 import { useRecoilState } from 'recoil';
-import { contentState, titleState } from "../atoms";
+import { contentState, titleState, authorState } from "../atoms";
 import Axios from "axios";
 
 
 function Post() {
 
+  const [author, setAuthor] = useRecoilState(authorState);
   const [title, setTitle] = useRecoilState(titleState);
   const [content, setContent] = useRecoilState(contentState);
 
@@ -13,14 +14,17 @@ function Post() {
       setTitle(e.target.value);
   }
   const onContentHandler = (e) => {
-    setContent(e.target.value);
+      setContent(e.target.value);
   }
 
   const onPost = () => {
 
+    setAuthor(sessionStorage.getItem('user_id'));
+    
       const postInfo = {
           title,
-          content
+          content,
+          author
       }
 
       var hasEmptyInfo = false;

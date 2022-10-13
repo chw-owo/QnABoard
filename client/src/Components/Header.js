@@ -1,9 +1,21 @@
 import { Link } from 'react-router-dom';
+import { useEffect} from 'react'
+import { useRecoilState } from 'recoil';
+import { isLoginState } from "../atoms";
 import Axios from "axios";
 
-function Header(props) {
+function Header() {
 
-  const isLogin = props.isLogin;
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState)
+ 
+  useEffect(() => {
+    if(sessionStorage.getItem('user_id') === null){
+      setIsLogin(false)
+    } else {
+      setIsLogin(true)
+    }
+
+  }, [setIsLogin])
 
   const onLogout = () => {
 

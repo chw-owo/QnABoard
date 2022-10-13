@@ -38,7 +38,7 @@ app.get("/list", (req, res) => {
 app.post("/post/question", (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
-  const author ="ddd"//req.session.user_id;
+  const author = req.body.author;
   const date = "111";
   const sqlQuery = "INSERT INTO post (TITLE, CONTENT, AUTHOR, DATE) VALUES (?,?,?,?)";
 
@@ -86,6 +86,68 @@ app.get("/answer/:idpost", (req, res) => {
   });
 });
 
+app.post("/accept/post", (req, res) => {
+  
+  const idpost = req.body.postId;
+  console.log(idpost);
+  const sqlPostQuery = "UPDATE post SET ACCEPTED = 'true' WHERE idpost= ?";
+
+  db.query(sqlPostQuery, idpost, (err, result) => {
+    if(err)
+    {
+
+        res.send(err);
+    }
+    else{
+
+        res.send("accept post success!");
+    }
+      
+  });
+
+});
+
+
+app.post("/accept/answer", (req, res) => {
+  
+  const idanswer = req.body.answerId;
+  console.log(idanswer);
+  const sqlAnswerQuery = "UPDATE answer SET ACCEPTED = 'true' WHERE idanswer= ? ";
+
+  db.query(sqlAnswerQuery, idanswer, (err, result) => {
+    if(err)
+    {
+        res.send(err);
+    }
+    else
+    {
+        res.send("accept answer success!");
+    }
+      
+  });
+
+});
+
+
+app.get("/accept/answer/:idpost", (req, res) => {
+
+  const idpost = req.params.idpost;
+  const sqlAnswerQuery = "SELECT * FROM answer WHERE idpost = ? AND ACCEPTED = 'true' ";
+
+  db.query(sqlAnswerQuery, idpost, (err, result) => {
+    if(err)
+    {
+        res.send(err);
+    }
+    else
+    {
+        res.send(result);
+    }
+      
+  });
+
+});
+
 app.post("/post/answer", (req, res) => {
 
   const answer = req.body.answer;
@@ -97,7 +159,9 @@ app.post("/post/answer", (req, res) => {
 
   db.query(sqlQuery, [ answer, author, date, idpost], (err, result) => {
     if(err)
-    {res.send(err);}
+    {
+      res.send(err);
+    }
     else
     {
       res.send("answer success!");
@@ -117,7 +181,7 @@ app.post("/login", (req, res) => {
 
     if (result.length == 0) {
       console.log('wrong username');
-      res.send(err)
+      res.send('wrong username')
     }
     else
     {
@@ -133,7 +197,7 @@ app.post("/login", (req, res) => {
       } else {
 
         console.log('wrong password');
-        res.send(err)
+        res.send('wrong password')
 
       }
       
